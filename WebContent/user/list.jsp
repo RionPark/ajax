@@ -14,11 +14,16 @@
 			<th data-col="uiNum">번호</th>
 			<th data-col="uiName">이름</th>
 			<th data-col="uiId">아이디</th>
+			<th data-col="uiAge">나이</th>
+			<th data-col="uiNickname">별명</th>
+			<th data-col="uiCredat">가입일</th>
+			<th data-col="uiAdmin">어드민여부</th>
 		</tr>
 	</thead>
 	<tbody>
 	</tbody>
 </table>
+<a href="/user/insert.jsp"><button>유저생성</button></a>
 <script>
 $(document).ready(function(){
 	$.ajax({
@@ -32,7 +37,7 @@ $(document).ready(function(){
 				html += '<tr>';
 				$('th[data-col]').each(function(idx,row){
 					var col = this.getAttribute('data-col');
-					html += '<td>' + res[i][col] + '</td>';
+					html += '<td><a href="/user/view.jsp?uiNum=' + res[i].uiNum +'">' + res[i][col] + '</a></td>';
 				})
 				html += '</tr>';
 			}

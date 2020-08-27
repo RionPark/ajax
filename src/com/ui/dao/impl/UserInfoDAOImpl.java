@@ -119,6 +119,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 				tUi.setUiBirth(rs.getString("ui_birth"));
 				tUi.setUiCredat(rs.getString("ui_credat"));
 				tUi.setUiEmail(rs.getString("ui_email"));
+				tUi.setUiNickname(rs.getString("ui_nickname"));
 				return tUi;
 			}
 		} catch (SQLException e) {
@@ -150,6 +151,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 				tUi.setUiBirth(rs.getString("ui_birth"));
 				tUi.setUiCredat(rs.getString("ui_credat"));
 				tUi.setUiEmail(rs.getString("ui_email"));
+				tUi.setUiNickname(rs.getString("ui_nickname"));
 				uiList.add(tUi);
 			}
 		} catch (SQLException e) {
