@@ -20,11 +20,18 @@
 	<tbody>
 	</tbody>
 </table>
-<a href="/user/insert.jsp"><button>유저생성</button></a>
+<div id="pageDiv">
+</div>
 <script>
-var page = 1;
 var pageSize = 10;
-$(document).ready(function(){
+var totalCnt = 0;
+var totalPage = 0;
+$(document).ready(getList);
+
+function getList(page){
+	if(isNaN(page)){
+		page = 1;
+	}
 	$.ajax({
 		url:'/ajax/member',
 		data:{
@@ -33,7 +40,8 @@ $(document).ready(function(){
 			pageSize:pageSize
 		},
 		success:function(res){
-			console.log(res.list);
+			totalCnt = res.totalCnt;
+			totalPage = Math.ceil(totalCnt/pageSize);
 			var html=''
 			for(var i=0;i<res.list.length;i++){
 				html += '<tr>';
@@ -44,9 +52,23 @@ $(document).ready(function(){
 				html += '</tr>';
 			}
 			$('#memberList>tbody').html(html);
+			var pageHtml = '<a href="#" onclick="getList(' + (page-1) + ')">◀</a>';
+			for(var i=1;i<=10;i++){
+				if(page==i){
+					pageHtml += '[<b>' + i + '</b>]'
+				}else{
+					pageHtml += '[<a href="#" onclick="getList(' + i + ')">' + i + '</a>] ';
+				}
+			}
+			pageHtml+= '<a href="#" onclick="getList(' + (page+1) + ')">▶</a>';
+			$('#pageDiv').html(pageHtml);
 		}
 	})
-})
+}
 </script>
 </body>
 </html>
+
+
+
+
