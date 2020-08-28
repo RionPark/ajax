@@ -1,14 +1,24 @@
 package com.ui.servlet;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.tomcat.dbcp.dbcp2.ConnectionFactory;
 import org.apache.tomcat.dbcp.dbcp2.DriverManagerConnectionFactory;
 import org.apache.tomcat.dbcp.dbcp2.PoolableConnection;
@@ -20,11 +30,23 @@ import org.apache.tomcat.dbcp.pool2.impl.GenericObjectPoolConfig;
 @WebServlet(loadOnStartup = 1,urlPatterns = "/dbcp2")
 public class InitServlet extends HttpServlet {
 	private static final long serialVersionUID = -2273647679784828245L;
-	private static final String URL = "jdbc:oracle:thin:@localhost:1521/xe";
-	private static final String ID = "test";
-	private static final String PWD = "test";
-	private static final String DRIVER_NAME = "oracle.jdbc.OracleDriver";
-
+	private static final String URL;
+	private static final String ID;
+	private static final String PWD;
+	private static final String DRIVER_NAME;
+	static {
+		InputStream is = InitServlet.class.getClassLoader().getResourceAsStream("resources/db.properties");
+		Properties prop = new Properties();
+		try {
+			prop.load(is);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		URL = prop.getProperty("URL");
+		ID = prop.getProperty("ID");
+		PWD = prop.getProperty("PWD");
+		DRIVER_NAME = prop.getProperty("DRIVER_NAME");
+	}
 	public void init() {
 		initDBCP2();
 	}
@@ -88,6 +110,13 @@ public class InitServlet extends HttpServlet {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(InitServlet.class.getClassLoader().getResourceAsStream("resources/mybatis-config.xml"));
+		try(SqlSession ss = ssf.openSession()){
+			List<Map<String,Object>> memberList = ss.selectList("Member.selectMember");
 		}
 	}
 }

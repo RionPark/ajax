@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<sql id="memberColumns">
+		mi_num,mi_id,mi_name
+	</sql>
+	
+  <select id="selectMemberList" resultType="map">
+    select * from 
+	(select rownum as cnt, mi.* 
+	from (select  mi_num, mi_id, mi_name 
+			from member_info
+			order by mi_num desc) mi
+    where rownum &lt;=#{endNum} )
+	where cnt &gt;=#{startNum}
+  </select>
+  <select id="selectMember" resultType="map">
+    select <include refid="memberColumns"/> from member_info
+    where mi_num=#{mi_num}
+  </select>
+  
+  <select id="selectCountMember" resultType="int">
+    select count(1) from member_info
+    where mi_num &lt;= 1000 
+  </select>
+</mapper>
+
+
+
+
+
+
+
