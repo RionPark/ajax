@@ -29,6 +29,9 @@
 <div id="pageDiv">
 </div>
 <script>
+function searchList(){
+	getList(1);
+}
 var pageSize = 10;
 var totalCnt = 0;
 var totalPage = 0;
@@ -43,7 +46,10 @@ function getList(page){
 		data:{
 			cmd:'list',
 			page:page,
-			pageSize:pageSize
+			pageSize:pageSize,
+			MI_NUM:$('#MI_NUM').val(),
+			MI_NAME:$('#MI_NAME').val(),
+			MI_ID:$('#MI_ID').val()
 		},
 		success:function(res){
 			totalCnt = res.totalCnt;

@@ -12,6 +12,11 @@
 	(select rownum as cnt, mi.* 
 	from (select  mi_num, mi_id, mi_name 
 			from member_info
+			<where>
+				<if test='MI_NUM!="" and MI_NUM !="0"'>
+					AND MI_NUM LIKE '%' || #{MI_NUM} || '%'
+				</if>
+			</where>
 			order by mi_num desc) mi
     where rownum &lt;=#{endNum} )
 	where cnt &gt;=#{startNum}
@@ -23,6 +28,11 @@
   
   <select id="selectCountMember" resultType="int">
     select count(1) from member_info
+    <where>
+		<if test='MI_NUM!="" and MI_NUM !="0"'>
+			AND MI_NUM LIKE '%' || #{MI_NUM} || '%'
+		</if>
+	</where>
   </select>
 </mapper>
 

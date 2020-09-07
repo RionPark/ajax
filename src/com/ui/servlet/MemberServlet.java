@@ -27,8 +27,9 @@ public class MemberServlet extends HttpServlet {
 		Map<String,Object> param = new HashMap<>();
 		param.put("page",request.getParameter("page"));
 		param.put("pageSize", request.getParameter("pageSize"));
+		param.put("MI_NUM",request.getParameter("MI_NUM"));
 		List<Map<String,Object>> mList = ms.selectMemberInfoList(param);
-		PrintWriter pw = response.getWriter();
+		PrintWriter pw = response.getWriter(); 
 		Map<String,Object> rMap = new HashMap<>();
 		rMap.put("list", mList);
 		rMap.put("totalCnt", ms.selectCountMember(param));
