@@ -59,9 +59,9 @@ function getList(page){
 			}
 			$('#memberList>tbody').html(html);
 			
-			var pageHtml = '<a href="#" onclick="getList(' + (page-1) + ')">◀</a>';
+			var pageHtml = '<a href="#" onclick="getList()">◀◀</a> <a href="#" onclick="getList(' + (page-1) + ')">◀</a>';
 			if(page==1){
-				pageHtml = '◀';
+				pageHtml = '◀'; 
 			}
 			var sNum = (Math.ceil(page/10)-1) * 10 + 1;
 			var lNum = sNum + (10-1);
