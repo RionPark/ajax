@@ -17,7 +17,7 @@ import com.ui.service.MemeberService;
 import com.ui.service.impl.MemberServiceImpl;
 
 
-@WebServlet("/ajax/member")
+@WebServlet(urlPatterns = {"/ajax/member","/ajax/m*"})
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private MemeberService ms = new MemberServiceImpl();   
