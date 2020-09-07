@@ -28,6 +28,8 @@ public class MemberServlet extends HttpServlet {
 		param.put("page",request.getParameter("page"));
 		param.put("pageSize", request.getParameter("pageSize"));
 		param.put("MI_NUM",request.getParameter("MI_NUM"));
+		param.put("MI_ID",request.getParameter("MI_ID"));
+		param.put("MI_NAME",request.getParameter("MI_NAME"));
 		List<Map<String,Object>> mList = ms.selectMemberInfoList(param);
 		PrintWriter pw = response.getWriter(); 
 		Map<String,Object> rMap = new HashMap<>();

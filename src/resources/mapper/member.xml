@@ -16,6 +16,12 @@
 				<if test='MI_NUM!="" and MI_NUM !="0"'>
 					AND MI_NUM LIKE '%' || #{MI_NUM} || '%'
 				</if>
+				<if test='MI_NAME!="" and MI_NAME !=null'>
+					AND MI_NAME LIKE '%' || #{MI_NAME} || '%'
+				</if>
+				<if test='MI_ID!="" and MI_ID !=null'>
+					AND MI_ID LIKE '%' || #{MI_ID} || '%'
+				</if>
 			</where>
 			order by mi_num desc) mi
     where rownum &lt;=#{endNum} )
@@ -32,7 +38,13 @@
 		<if test='MI_NUM!="" and MI_NUM !="0"'>
 			AND MI_NUM LIKE '%' || #{MI_NUM} || '%'
 		</if>
-	</where>
+		<if test='MI_NAME!="" and MI_NAME !=null'>
+			AND MI_NAME LIKE '%' || #{MI_NAME} || '%'
+		</if>
+		<if test='MI_ID!="" and MI_ID !=null'>
+			AND MI_ID LIKE '%' || #{MI_ID} || '%'
+		</if>
+	</where> 
   </select>
 </mapper>
 

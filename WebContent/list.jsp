@@ -63,31 +63,37 @@ function getList(page){
 				})
 				html += '</tr>';
 			}
+			if(!res.list.length){
+				html += '<tr><td colspan="' + $('th[data-col]').length + '">검색된 내용이 없습니다.</td></tr>';
+			}
 			$('#memberList>tbody').html(html);
 			
-			var pageHtml = '<a href="#" onclick="getList()">◀◀</a> <a href="#" onclick="getList(' + (page-1) + ')">◀</a>';
-			if(page==1){
-				pageHtml = '◀'; 
-			}
-			var sNum = (Math.ceil(page/10)-1) * 10 + 1;
-			var lNum = sNum + (10-1);
-			if(lNum>totalPage){
-				lNum = totalPage;
-			}
-			for(var i=sNum;i<=lNum;i++){
-				if(page==i){
-					pageHtml += '[<b>' + i + '</b>]'
-				}else{
-					pageHtml += '[<a href="#" onclick="getList(' + i + ')">' + i + '</a>] ';
+			if(res.list.length){
+				var pageHtml = '<a href="#" onclick="getList()">◀◀</a> <a href="#" onclick="getList(' + (page-1) + ')">◀</a>';
+				if(page==1){
+					pageHtml = '◀'; 
 				}
-			}
-			var lastPageHtml = '<a href="#" onclick="getList(' + (page+1) + ')">▶</a>';
-			if(totalPage==page){
-				lastPageHtml = '▶';
-			}
-			lastPageHtml += ' <a href="#" onclick="getList(' + totalPage + ')">▶▶</a>';
-			$('#pageDiv').html(pageHtml + lastPageHtml);
-			
+				var sNum = (Math.ceil(page/10)-1) * 10 + 1;
+				var lNum = sNum + (10-1);
+				if(lNum>totalPage){
+					lNum = totalPage;
+				}
+				for(var i=sNum;i<=lNum;i++){
+					if(page==i){
+						pageHtml += '[<b>' + i + '</b>]'
+					}else{
+						pageHtml += '[<a href="#" onclick="getList(' + i + ')">' + i + '</a>] ';
+					}
+				}
+				var lastPageHtml = '<a href="#" onclick="getList(' + (page+1) + ')">▶</a>';
+				if(totalPage==page){
+					lastPageHtml = '▶';
+				}
+				lastPageHtml += ' <a href="#" onclick="getList(' + totalPage + ')">▶▶</a>';
+				$('#pageDiv').html(pageHtml + lastPageHtml);
+			}else{
+				$('#pageDiv').html('');
+			}			
 		}
 	})
 }
