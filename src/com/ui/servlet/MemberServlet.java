@@ -31,7 +31,7 @@ public class MemberServlet extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		Map<String,Object> rMap = new HashMap<>();
 		rMap.put("list", mList);
-		rMap.put("totalCnt", 10000);
+		rMap.put("totalCnt", ms.selectCountMember(param));
 		pw.println(g.toJson(rMap));
 	}
 

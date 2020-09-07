@@ -23,7 +23,6 @@
   
   <select id="selectCountMember" resultType="int">
     select count(1) from member_info
-    where mi_num &lt;= 1000 
   </select>
 </mapper>
 

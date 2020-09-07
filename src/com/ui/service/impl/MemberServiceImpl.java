@@ -22,15 +22,9 @@ public class MemberServiceImpl implements MemeberService {
 		mi.put("endNum", endNum);
 		return midao.selectMemberInfoList(mi);
 	}
-	public static void main(String[] args) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("page",3);
-		param.put("pageSize", 30);
-		MemeberService ms = new MemberServiceImpl();
-		List<Map<String, Object>> mList = ms.selectMemberInfoList(param);
-		for(Map<String, Object> m : mList) {
-			System.out.println(m);
-		}
+	@Override
+	public int selectCountMember(Map<String, Object> mi) {
+		return midao.selectCountMember(mi);
 	}
 
 }
