@@ -101,6 +101,13 @@ function getList(page){
 </body>
 </html>
 
-
+<!-- 
+1. crud 
+2. mvc
+3. ajax + JSON
+4. maven
+5. mybatis
+6. pagination
+ -->
 
 
