@@ -5,9 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.tr-link{
+	cursor:pointer;
+	background-color:#fff;
+}
+.tr-link:hover{
+	background-color: #a1f1f1;
+}
+</style>
 </head>
 <body>
 <script>
+function goView(uiNum){
+	location.href='/views/user/view?ui_num=' + uiNum;
+}
 function getUserList(param){
 	var url="/user/list";
 	if(param){
@@ -20,7 +32,7 @@ function getUserList(param){
 			var res = JSON.parse(xhr.responseText);
 			var html = '';
 			for(var i=0;i<res.length;i++){
-				html += '<tr>';
+				html += '<tr class="tr-link" onclick="goView(' + res[i].ui_num + ')">';
 				html += '<td>' + res[i].ui_num + '</td>';
 				html += '<td>' + res[i].ui_name + '</td>';
 				html += '<td>' + res[i].ui_id + '</td>';

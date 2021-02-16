@@ -76,4 +76,34 @@ public class UserDAOImpl implements UserDAO {
 		return userList;
 	}
 
+	@Override
+	public Map<String, String> selectUser(int uiNum) {
+		String sql = "select * from user_info where ui_num=?";
+		sql += " order by ui_num desc";
+		Connection con = DBConn.getConn();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, uiNum);
+			rs = ps.executeQuery();
+			while(rs.next()) { 
+				Map<String,String> user = new HashMap<>();
+				user.put("ui_num", rs.getString("ui_num"));
+				user.put("ui_name", rs.getString("ui_name"));
+				user.put("ui_id", rs.getString("ui_id"));
+				user.put("ui_genre", rs.getString("ui_genre"));
+				user.put("ui_email", rs.getString("ui_email"));
+				user.put("ui_address", rs.getString("ui_address"));
+				user.put("credat", rs.getString("credat"));
+				return user;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConn.close(con,ps,rs);
+		}
+		return null;
+	}
+
 }

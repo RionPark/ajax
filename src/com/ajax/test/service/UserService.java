@@ -6,4 +6,5 @@ import java.util.Map;
 public interface UserService {
 
 	List<Map<String,String>> selectUserList(Map<String,String> user);
+	Map<String,String> selectUser(int uiNum);
 }
