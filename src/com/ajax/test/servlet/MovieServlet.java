@@ -2,6 +2,7 @@ package com.ajax.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,10 @@ public class MovieServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = request.getRequestURI();
-		List<Map<String,String>> movieList = movieService.selectMovieList(null);
+		Map<String,String> movie = new HashMap<>();
+		movie.put("mi_name", request.getParameter("mi_name"));
+		movie.put("mi_genre", request.getParameter("mi_genre"));
+		List<Map<String,String>> movieList = movieService.selectMovieList(movie);
 		String json = g.toJson(movieList);
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();

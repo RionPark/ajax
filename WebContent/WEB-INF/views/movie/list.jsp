@@ -39,8 +39,15 @@ function getMovieList(param){
 window.onload = function(){
 	getMovieList();
 };
+function search(){
+	var param = '?mi_name=' + document.querySelector('#mi_name').value;
+	param += '&mi_genre=' + document.querySelector('#mi_genre').value;
+	getMovieList(param);
+}
 </script>
 <h1>영화목록</h1>
+<input type="text" id="mi_name" placeholder="영화명"><br>
+<input type="text" id="mi_genre" placeholder="장르"><button onclick="search()">검색</button>
 <table border="1">
 	<thead>
 		<tr>
