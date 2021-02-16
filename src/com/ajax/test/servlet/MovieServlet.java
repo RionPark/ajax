@@ -25,6 +25,7 @@ public class MovieServlet extends HttpServlet {
 		Map<String,String> movie = new HashMap<>();
 		movie.put("mi_name", request.getParameter("mi_name"));
 		movie.put("mi_genre", request.getParameter("mi_genre"));
+		movie.put("mi_director", request.getParameter("mi_director"));
 		List<Map<String,String>> movieList = movieService.selectMovieList(movie);
 		String json = g.toJson(movieList);
 		response.setContentType("application/json;charset=UTF-8");

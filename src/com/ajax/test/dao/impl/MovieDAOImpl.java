@@ -17,12 +17,19 @@ public class MovieDAOImpl implements MovieDAO {
 	public List<Map<String, String>> selectMovieList(Map<String, String> pMovie) {
 		List<Map<String, String>>  movieList = new ArrayList<>();
 		String sql = "select * from movie_info where 1=1 ";
+		int cnt = 0;
 		if(pMovie!=null) {
-			if(pMovie.get("mi_name")!=null) {
+			if(pMovie.get("mi_name")!=null && !"".equals(pMovie.get("mi_name"))) {
 				sql += " and mi_name  like '%' || ? || '%'";
+				cnt++;
 			}
-			if(pMovie.get("mi_genre")!=null) {
+			if(pMovie.get("mi_genre")!=null && !"".equals(pMovie.get("mi_genre"))) {
 				sql += " and mi_genre  like '%' || ? || '%'";
+				cnt++;
+			}
+			if(pMovie.get("mi_director")!=null && !"".equals(pMovie.get("mi_director"))) {
+				sql += " and mi_director  like '%' || ? || '%'";
+				cnt++;
 			}
 		}
 		sql += " order by mi_num desc";
@@ -32,15 +39,14 @@ public class MovieDAOImpl implements MovieDAO {
 		try {
 			ps = con.prepareStatement(sql);
 			if(pMovie!=null) {
-				if(pMovie.get("mi_name")!=null) {
-					ps.setString(1, pMovie.get("mi_name"));
+				if(pMovie.get("mi_director")!=null && !"".equals(pMovie.get("mi_director"))) {
+					ps.setString(cnt--, pMovie.get("mi_director"));
 				}
-				if(pMovie.get("mi_genre")!=null) {
-					if(pMovie.get("mi_name")!=null) {
-						ps.setString(2, pMovie.get("mi_genre"));
-					}else {
-						ps.setString(1, pMovie.get("mi_genre"));
-					}
+				if(pMovie.get("mi_genre")!=null && !"".equals(pMovie.get("mi_genre"))) {
+					ps.setString(cnt--, pMovie.get("mi_genre"));
+				}
+				if(pMovie.get("mi_name")!=null && !"".equals(pMovie.get("mi_name"))) {
+					ps.setString(cnt--, pMovie.get("mi_name"));
 				}
 			}
 			rs = ps.executeQuery();
