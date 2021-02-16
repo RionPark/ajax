@@ -49,7 +49,8 @@ function search(){
 <h1>영화목록</h1>
 <input type="text" id="mi_name" placeholder="영화명"><br>
 <input type="text" id="mi_genre" placeholder="장르"><br>
-<input type="text" id="mi_director" placeholder="감독"><button onclick="search()">검색</button>
+<input type="text" id="mi_director" placeholder="감독"><br>
+<input type="text" id="mi_producer" placeholder="제작사"><button onclick="search()">검색</button>
 <table border="1">
 	<thead>
 		<tr>
