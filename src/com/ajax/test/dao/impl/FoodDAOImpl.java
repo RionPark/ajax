@@ -16,12 +16,19 @@ public class FoodDAOImpl implements FoodDAO {
 	@Override
 	public List<Map<String, String>> selectFootList(Map<String, String> pFood) {
 		List<Map<String, String>>  foodList = new ArrayList<>();
-		String sql = "select * from food_info order by fi_num desc";
+		String sql = "select * from food_info";
+		if(pFood!=null && pFood.get("fi_name")!=null) {
+			sql += " where fi_name like '%' || ? || '%'";
+		}
+		sql += " order by fi_num desc";
 		Connection con = DBConn.getConn();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = con.prepareStatement(sql);
+			if(pFood!=null && pFood.get("fi_name")!=null) {
+				ps.setString(1, pFood.get("fi_name"));
+			}
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				Map<String,String> food = new HashMap<>();

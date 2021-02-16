@@ -2,7 +2,6 @@ package com.ajax.test.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,27 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ajax.test.service.FoodService;
-import com.ajax.test.service.impl.FoodServiceImpl;
+import com.ajax.test.service.MovieService;
+import com.ajax.test.service.impl.MovieServiceImpl;
 import com.google.gson.Gson;
 
-
-public class AjaxServlet extends HttpServlet {
+public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private FoodService foodService = new FoodServiceImpl();
-	private Gson gson = new Gson();
+    private MovieService movieService = new  MovieServiceImpl();
+    private Gson g = new Gson();
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter pw = response.getWriter();
-		String fiName = request.getParameter("fi_name");
-		Map<String,String> param = new HashMap<>();
-		param.put("fi_name", fiName);
-		List<Map<String,String>> foodList = foodService.selectFootList(param);
-		String json = gson.toJson(foodList);
-		pw.print(json);
+		String url = request.getRequestURI();
+		List<Map<String,String>> movieList = movieService.selectMovieList(null);
+		String json = g.toJson(movieList);
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

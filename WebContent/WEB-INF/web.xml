@@ -12,4 +12,29 @@
   	<servlet-name>AjaxServlet</servlet-name>
   	<url-pattern>/ajax/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>FoodServlet</servlet-name>
+  	<servlet-class>com.ajax.test.servlet.FoodServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>FoodServlet</servlet-name>
+  	<url-pattern>/food/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>ViewServlet</servlet-name>
+  	<servlet-class>com.ajax.test.servlet.ViewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ViewServlet</servlet-name>
+  	<url-pattern>/views/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>MovieServlet</servlet-name>
+  	<servlet-class>com.ajax.test.servlet.MovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MovieServlet</servlet-name>
+  	<url-pattern>/movie/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
