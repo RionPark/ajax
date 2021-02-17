@@ -14,12 +14,19 @@ window.onload = function(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			var res = xhr.responseText;
-			document.write(res);
+			res = JSON.parse(res);
+			var html = '<table border="1">';
+			html += '<tr>';
+			html += '<th>이름</th>'
+			html += '<td>' + res.ui_name + '</td>'
+			html += '</tr>';
+			html += '</table>';
+			document.querySelector('#rDiv').innerHTML = html;
 		}
 	}
 	xhr.send();
 }
 </script>
-
+<div id="rDiv"></div>
 </body>
 </html>
