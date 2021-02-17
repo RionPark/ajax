@@ -7,15 +7,18 @@ import java.util.Map;
 
 public class Test {
 	public static void main(String[] args) {		
-		List<Map<String,Object>> persons = new ArrayList<>();
-		Map<String,Object> person = new HashMap<>();
-		person.put("name", "김철수");
-		person.put("age", 22);
-		persons.add(person);
-		person = new HashMap<>();
-		person.put("name", "이순희");
-		person.put("age", 33);
-		persons.add(person);
-		System.out.println(persons);
+		String[] arr = new String[3];
+		arr[0] = "고양이";
+		arr[1] = "강아지";
+		arr[2] = "고슴도치";
+		arr[3] = "우하하하";
+		
+		for(String str:arr) {
+			System.out.println(str);
+		}
+		
+		for(int i=0;i<arr.length;i++) {
+			System.out.println(arr[i]);
+		}
 	}
 }
