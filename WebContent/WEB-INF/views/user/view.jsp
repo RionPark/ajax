@@ -57,6 +57,32 @@
 		}
 		xhr.send();
 	}
+	
+	function update(){
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST','/user/update');
+		var param = {
+				ui_num : '<%=request.getParameter("ui_num")%>',
+				ui_name : document.querySelector('#ui_name').value,
+				ui_id : document.querySelector('#ui_id').value,
+				ui_email : document.querySelector('#ui_email').value,
+				ui_address : document.querySelector('#ui_address').value,
+		}
+		xhr.setRequestHeader('content-type','application/json');
+		param = JSON.stringify(param);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4 && xhr.status==200){
+				var res = JSON.parse(xhr.responseText);
+				if(res.result==1){
+					alert('업데이트가 완료되었습니다.');
+					location.reload();
+				}else{
+					alert('업데이트가 실패하였습니다.');
+				}
+			}
+		}
+		xhr.send(param);
+	}
 </script>
 	<div id="rDiv"></div>
 	<div id="uDiv" style="display:none">
@@ -80,7 +106,7 @@
 				</tr>
 				<tr>
 					<th colspan="2">
-						<button>수정</button>
+						<button onclick="update()">수정</button>
 						<button onclick="showUDiv()">취소</button>
 					</th>
 				</tr>

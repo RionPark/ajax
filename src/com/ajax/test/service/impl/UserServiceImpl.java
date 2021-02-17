@@ -17,5 +17,18 @@ public class UserServiceImpl implements UserService {
 	public Map<String, String> selectUser(int uiNum) {
 		return userDAO.selectUser(uiNum);
 	}
+	@Override
+	public int updateUser(Map<String, String> user) {
+		return userDAO.updateUser(user);
+	}
+	@Override
+	public int countUserById(String uiId) {
+		return userDAO.countUserById(uiId);
+	}
+	@Override
+	public int insertUser(Map<String, String> user) {
+		// TODO Auto-generated method stub
+		return userDAO.insertUser(user);
+	}
 
 }

@@ -106,4 +106,118 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+	@Override
+	public int updateUser(Map<String, String> user) {
+		String sql = " update user_info set ";
+		int cnt = 0;
+		if(user.get("ui_id")!=null && !"".equals(user.get("ui_id"))) {
+			sql += " ui_id=?,";
+			cnt++;
+		}
+		if(user.get("ui_name")!=null && !"".equals(user.get("ui_name"))) {
+			sql += " ui_name=?,";
+			cnt++;
+		}
+		if(user.get("ui_email")!=null && !"".equals(user.get("ui_email"))) {
+			sql += " ui_email=?,";
+			cnt++;
+		}
+		if(user.get("ui_address")!=null && !"".equals(user.get("ui_address"))) {
+			sql += " ui_address=?,";
+			cnt++;
+		}
+		sql = sql.substring(0,sql.length()-1) + " where ui_num=?";
+		System.out.println(sql);
+		Connection con = DBConn.getConn();
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(cnt+1, user.get("ui_num"));
+			if(user.get("ui_address")!=null && !"".equals(user.get("ui_address"))) {
+				ps.setString(cnt--,user.get("ui_address"));
+			}
+			if(user.get("ui_email")!=null && !"".equals(user.get("ui_email"))) {
+				ps.setString(cnt--,user.get("ui_email"));
+			}
+			if(user.get("ui_name")!=null && !"".equals(user.get("ui_name"))) {
+				ps.setString(cnt--,user.get("ui_name"));
+			}
+			if(user.get("ui_id")!=null && !"".equals(user.get("ui_id"))) {
+				ps.setString(cnt--,user.get("ui_id"));
+			}
+			return ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConn.close(con,ps);
+		}
+		return 0;
+	}
+
+	@Override
+	public int countUserById(String uiId) {
+		String sql = "select count(1) as cnt from user_info where ui_id=?";
+		Connection con = DBConn.getConn();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, uiId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConn.close(con,ps,rs);
+		}
+		return 0;
+	}
+
+	@Override
+	public int insertUser(Map<String, String> user) {
+		String sql = "insert into user_info(UI_NUM," + 
+				"UI_NAME," + 
+				"UI_ID," + 
+				"UI_PWD," + 
+				"UI_GENRE," + 
+				"UI_EMAIL," + 
+				"UI_PHONE1," + 
+				"UI_PHONE2," + 
+				"UI_ADDRESS," + 
+				"UI_HINT," + 
+				"UI_ANSWER," + 
+				"CREDAT," + 
+				"CRETIM," + 
+				"MODDAT," + 
+				"MODTIM," + 
+				"UI_IMG)";
+		sql += "values(seq_ui_num.nextval, ?,?,?,?,?,?,?,?,?,?,"
+				+ "to_char(sysdate,'YYYYMMDD'),to_char(sysdate,'HH24MISS'),"
+				+ "to_char(sysdate,'YYYYMMDD'),to_char(sysdate,'HH24MISS'),?)";
+		Connection con = DBConn.getConn();
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, user.get("ui_name"));
+			ps.setString(2, user.get("ui_id"));
+			ps.setString(3, user.get("ui_pwd"));
+			ps.setString(4, user.get("ui_genre"));
+			ps.setString(5, user.get("ui_email"));
+			ps.setString(6, user.get("ui_phone1"));
+			ps.setString(7, user.get("ui_phone2"));
+			ps.setString(8, user.get("ui_address"));
+			ps.setString(9, user.get("ui_hint"));
+			ps.setString(10, user.get("ui_answer"));
+			ps.setString(11, user.get("ui_img"));
+			return ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConn.close(con,ps);
+		}
+		return 0;
+	}
+
 }

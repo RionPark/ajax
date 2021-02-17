@@ -1,5 +1,6 @@
 package com.ajax.test.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -39,13 +40,40 @@ public class UserServlet extends HttpServlet {
 			int uiNum = Integer.parseInt(request.getParameter("ui_num"));
 			Map<String,String> user = userService.selectUser(uiNum);
 			json = g.toJson(user);
+		}else if("check".equals(cmd)) {
+			String uiId = request.getParameter("ui_id");
+			int result = userService.countUserById(uiId);
+			Map<String,Integer> rMap = new HashMap<>();
+			rMap.put("result", result);
+			json = g.toJson(rMap);
 		}
 		out.print(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		response.setContentType("application/json;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		String url = request.getRequestURI();
+		int idx = url.lastIndexOf("/");
+		String cmd = url.substring(idx+1);
+		request.setCharacterEncoding("UTF-8");
+		BufferedReader br = request.getReader();
+		String str = null;
+		String json = "";
+		while((str=br.readLine())!=null) {
+			json += str;
+		}
+		Map<String,String> user = g.fromJson(json, Map.class);
+		int result = 0;
+		if("update".equals(cmd)) {
+			result = userService.updateUser(user);
+		}else if("insert".equals(cmd)) {
+			result = userService.insertUser(user);
+		}
+		Map<String,Integer> rMap = new HashMap<>();
+		rMap.put("result", result);
+		json = g.toJson(rMap);
+		out.print(json);
+	} 
 
 }
